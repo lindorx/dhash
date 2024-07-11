@@ -1,0 +1,83 @@
+menuconfig CRYPTO
+    tristate "Cryptographic API"
+    help
+      Enable Cryptographic
+
+if CRYPTO
+
+config CRYPTO_HASH
+    tristate
+
+config CRYPTO_SHA224
+    bool "SHA-224"
+    default n
+    select CRYPTO_HASH
+    help
+      SHA-224 secure hash algorithms
+
+config CRYPTO_SHA256
+    bool "SHA-256"
+    default n
+    select CRYPTO_HASH
+    help
+      SHA-224 secure hash algorithms
+
+config CRYPTO_SHA384
+    bool "SHA-384"
+    default n
+    select CRYPTO_HASH
+    help
+      SHA-384 secure hash algorithms
+
+config CRYPTO_SHA512
+    bool "SHA-512"
+    default n
+    select CRYPTO_HASH
+    help
+      SHA-512 secure hash algorithms
+
+config CRYPTO_SM3
+    bool "SM3"
+    default n
+    select CRYPTO_HASH
+    help
+      SM3 (ShangMi 3) secure hash function
+
+config CRYPTO_ASCON
+    bool "Ascon"
+    default n
+    select CRYPTO_HASH
+    help
+      Ascon is a lightweight encryption algorithm
+
+if CRYPTO_ASCON
+
+choice
+    prompt "Select hash mode"
+    default CRYPTO_ASCON_HASH
+    
+config CRYPTO_ASCON_HASH
+    tristate "Ascon hash"
+    help
+      ascon-hash digest length 32 bytes
+
+config CRYPTO_ASCON_HASHA
+    tristate "Ascon hasha"
+    help
+      ascon-hasha digest length 32 bytes
+
+config CRYPTO_ASCON_XOF
+    tristate "Ascon xof"
+    help
+      ascon-xof is a dynamic hashing algorithm
+
+config CRYPTO_ASCON_XOFA
+    tristate "Ascon xofa"
+    help
+      ascon-xofa is a dynamic hashing algorithm
+
+endchoice
+
+endif # CRYPTO_ASCON
+
+endif # CRYPTO
