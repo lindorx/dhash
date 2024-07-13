@@ -28,14 +28,14 @@ static inline buint64_t ror64(buint64_t x, buint32_t n)
     return (x >> (n & 63)) | (x << ((-n) & 63));
 }
 
-static inline buint64_t load_bytes(const buint8_t *bytes, buint32_t n)
+static inline buint64_t load_bytes_64(const buint8_t *bytes, buint32_t n)
 {
     buint64_t x = 0;
     memcpy(&x, bytes, n > 8 ? 8 : n);
     return x;
 }
 
-static inline void store_bytes(buint8_t *bytes, buint64_t w, buint32_t n)
+static inline void store_bytes_64(buint8_t *bytes, buint64_t w, buint32_t n)
 {
     buint64_t x = bswap_64(w);
     memcpy(bytes, &x, n);

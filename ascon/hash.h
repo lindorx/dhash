@@ -10,11 +10,12 @@
 #include "bitops.h"
 #include "config.h"
 
-typedef union {
+typedef union
+{
   uint_64 x[5];
   uint_64 w[5][2];
   uint_8 b[5][8];
-} AsconState;
+} ascon_state;
 
 #define CRYPTO_BYTES 32
 

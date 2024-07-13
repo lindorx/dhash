@@ -20,7 +20,7 @@ const uint32_t sha256_K[64] = {
     0x748f82eeUL, 0x78a5636fUL, 0x84c87814UL, 0x8cc70208UL,
     0x90befffaUL, 0xa4506cebUL, 0xbef9a3f7UL, 0xc67178f2UL};
 
-int SHA256Init(SHA256Ctx *c)
+int sha256_init(sha256_ctx *c)
 {
     c->h[0] = 0x6A09E667UL;
     c->h[1] = 0xBB67AE85UL;
@@ -45,7 +45,7 @@ int SHA256Init(SHA256Ctx *c)
 #define sigma1(x) (ror32(x, 17) ^ ror32(x, 19) ^ ((x) >> 10))
 
 /* 分块计算 */
-void SHA256BlockCal(SHA256Ctx *ctx, const void *msg, size_t num)
+void SHA256BlockCal(sha256_ctx *ctx, const void *msg, size_t num)
 {
     uint32_t a, b, c, d, e, f, g, h;
     uint32_t t1, t2, i, w[16];
@@ -99,7 +99,7 @@ void SHA256BlockCal(SHA256Ctx *ctx, const void *msg, size_t num)
     }
 }
 
-int SHA256Update(SHA256Ctx *c, const void *msg, size_t len)
+int sha256_update(sha256_ctx *c, const void *msg, size_t len)
 {
     uint_32 l;
     unsigned char *p = (unsigned char *)c->data;
@@ -117,8 +117,7 @@ int SHA256Update(SHA256Ctx *c, const void *msg, size_t len)
         if (len < n) {
             memcpy(p + c->num, data, len);
             return 1;
-        }
-        else {
+        } else {
             memcpy(p + c->num, data, n);
             len -= n;
             data += n;
@@ -139,7 +138,7 @@ int SHA256Update(SHA256Ctx *c, const void *msg, size_t len)
     return 1;
 }
 
-int SHA256Final(unsigned char *md, SHA256Ctx *ctx)
+int sha256_final(unsigned char *md, sha256_ctx *ctx)
 {
     unsigned char *p = (unsigned char *)ctx->data;
     size_t n = ctx->num;
@@ -174,24 +173,25 @@ int SHA256Final(unsigned char *md, SHA256Ctx *ctx)
 
     switch (ctx->md_len) {
     case SHA224_DIGEST_LENGTH:
-    for (n = 0; n < SHA224_DIGEST_LENGTH / sizeof(uint_32); n++) {
-        uint_32 t = ctx->h[n];
+        for (n = 0; n < SHA224_DIGEST_LENGTH / sizeof(uint_32); n++) {
+            uint_32 t = ctx->h[n];
 
-        *(md++) = (unsigned char)(t >> 24);
-        *(md++) = (unsigned char)(t >> 16);
-        *(md++) = (unsigned char)(t >> 8);
-        *(md++) = (unsigned char)(t);
-    }
+            *(md++) = (unsigned char)(t >> 24);
+            *(md++) = (unsigned char)(t >> 16);
+            *(md++) = (unsigned char)(t >> 8);
+            *(md++) = (unsigned char)(t);
+        }
         break;
     case SHA256_DIGEST_LENGTH:
-    for (n = 0; n < SHA256_DIGEST_LENGTH / sizeof(uint_32); n++) {
-        uint_32 t = ctx->h[n];
+        for (n = 0; n < SHA256_DIGEST_LENGTH / sizeof(uint_32); n++) {
+            uint_32 t = ctx->h[n];
 
-        *(md++) = (unsigned char)(t >> 24);
-        *(md++) = (unsigned char)(t >> 16);
-        *(md++) = (unsigned char)(t >> 8);
-        *(md++) = (unsigned char)(t);
-    }
+            *(md++) = (unsigned char)(t >> 24);
+            *(md++) = (unsigned char)(t >> 16);
+            *(md++) = (unsigned char)(t >> 8);
+            *(md++) = (unsigned char)(t);
+        }
+        break;
     default:
         return 0;
     }
@@ -199,21 +199,22 @@ int SHA256Final(unsigned char *md, SHA256Ctx *ctx)
     return 1;
 }
 
-/* 
- * SHA512: 根据输入数据生成摘要
+/*
+ * sha512: 根据输入数据生成摘要
  * msg: 原始数据
  * len: 数据长度，单位字节
  * md: 摘要
  * 返回值: 0表示发生错误，不等于0表示工作正常
-*/
-unsigned char *SHA256(const void *msg, size_t len, unsigned char *md)
+ */
+unsigned char *sha256(const void *msg, size_t len, unsigned char *md)
 {
-    SHA256Ctx ctx;
+    sha256_ctx ctx;
 
-    SHA256Init(&ctx);
-    if (SHA256Update(&ctx, msg, len)) {
-        if (SHA256Final(md, &ctx))
+    sha256_init(&ctx);
+    if (sha256_update(&ctx, msg, len)) {
+        if (sha256_final(md, &ctx)) {
             return md;
+        }
     }
     return 0;
 }

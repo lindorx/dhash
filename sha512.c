@@ -2,40 +2,93 @@
 
 /* 常数表 */
 static const uint_64 sha512_K[80] = {
-    0x428a2f98d728ae22ULL, 0x7137449123ef65cdULL, 0xb5c0fbcfec4d3b2fULL,
-    0xe9b5dba58189dbbcULL, 0x3956c25bf348b538ULL, 0x59f111f1b605d019ULL,
-    0x923f82a4af194f9bULL, 0xab1c5ed5da6d8118ULL, 0xd807aa98a3030242ULL,
-    0x12835b0145706fbeULL, 0x243185be4ee4b28cULL, 0x550c7dc3d5ffb4e2ULL,
-    0x72be5d74f27b896fULL, 0x80deb1fe3b1696b1ULL, 0x9bdc06a725c71235ULL,
-    0xc19bf174cf692694ULL, 0xe49b69c19ef14ad2ULL, 0xefbe4786384f25e3ULL,
-    0x0fc19dc68b8cd5b5ULL, 0x240ca1cc77ac9c65ULL, 0x2de92c6f592b0275ULL,
-    0x4a7484aa6ea6e483ULL, 0x5cb0a9dcbd41fbd4ULL, 0x76f988da831153b5ULL,
-    0x983e5152ee66dfabULL, 0xa831c66d2db43210ULL, 0xb00327c898fb213fULL,
-    0xbf597fc7beef0ee4ULL, 0xc6e00bf33da88fc2ULL, 0xd5a79147930aa725ULL,
-    0x06ca6351e003826fULL, 0x142929670a0e6e70ULL, 0x27b70a8546d22ffcULL,
-    0x2e1b21385c26c926ULL, 0x4d2c6dfc5ac42aedULL, 0x53380d139d95b3dfULL,
-    0x650a73548baf63deULL, 0x766a0abb3c77b2a8ULL, 0x81c2c92e47edaee6ULL,
-    0x92722c851482353bULL, 0xa2bfe8a14cf10364ULL, 0xa81a664bbc423001ULL,
-    0xc24b8b70d0f89791ULL, 0xc76c51a30654be30ULL, 0xd192e819d6ef5218ULL,
-    0xd69906245565a910ULL, 0xf40e35855771202aULL, 0x106aa07032bbd1b8ULL,
-    0x19a4c116b8d2d0c8ULL, 0x1e376c085141ab53ULL, 0x2748774cdf8eeb99ULL,
-    0x34b0bcb5e19b48a8ULL, 0x391c0cb3c5c95a63ULL, 0x4ed8aa4ae3418acbULL,
-    0x5b9cca4f7763e373ULL, 0x682e6ff3d6b2b8a3ULL, 0x748f82ee5defb2fcULL,
-    0x78a5636f43172f60ULL, 0x84c87814a1f0ab72ULL, 0x8cc702081a6439ecULL,
-    0x90befffa23631e28ULL, 0xa4506cebde82bde9ULL, 0xbef9a3f7b2c67915ULL,
-    0xc67178f2e372532bULL, 0xca273eceea26619cULL, 0xd186b8c721c0c207ULL,
-    0xeada7dd6cde0eb1eULL, 0xf57d4f7fee6ed178ULL, 0x06f067aa72176fbaULL,
-    0x0a637dc5a2c898a6ULL, 0x113f9804bef90daeULL, 0x1b710b35131c471bULL,
-    0x28db77f523047d84ULL, 0x32caab7b40c72493ULL, 0x3c9ebe0a15c9bebcULL,
-    0x431d67c49c100d4cULL, 0x4cc5d4becb3e42b6ULL, 0x597f299cfc657e2aULL,
-    0x5fcb6fab3ad6faecULL, 0x6c44198c4a475817ULL,
+    0x428a2f98d728ae22ULL,
+    0x7137449123ef65cdULL,
+    0xb5c0fbcfec4d3b2fULL,
+    0xe9b5dba58189dbbcULL,
+    0x3956c25bf348b538ULL,
+    0x59f111f1b605d019ULL,
+    0x923f82a4af194f9bULL,
+    0xab1c5ed5da6d8118ULL,
+    0xd807aa98a3030242ULL,
+    0x12835b0145706fbeULL,
+    0x243185be4ee4b28cULL,
+    0x550c7dc3d5ffb4e2ULL,
+    0x72be5d74f27b896fULL,
+    0x80deb1fe3b1696b1ULL,
+    0x9bdc06a725c71235ULL,
+    0xc19bf174cf692694ULL,
+    0xe49b69c19ef14ad2ULL,
+    0xefbe4786384f25e3ULL,
+    0x0fc19dc68b8cd5b5ULL,
+    0x240ca1cc77ac9c65ULL,
+    0x2de92c6f592b0275ULL,
+    0x4a7484aa6ea6e483ULL,
+    0x5cb0a9dcbd41fbd4ULL,
+    0x76f988da831153b5ULL,
+    0x983e5152ee66dfabULL,
+    0xa831c66d2db43210ULL,
+    0xb00327c898fb213fULL,
+    0xbf597fc7beef0ee4ULL,
+    0xc6e00bf33da88fc2ULL,
+    0xd5a79147930aa725ULL,
+    0x06ca6351e003826fULL,
+    0x142929670a0e6e70ULL,
+    0x27b70a8546d22ffcULL,
+    0x2e1b21385c26c926ULL,
+    0x4d2c6dfc5ac42aedULL,
+    0x53380d139d95b3dfULL,
+    0x650a73548baf63deULL,
+    0x766a0abb3c77b2a8ULL,
+    0x81c2c92e47edaee6ULL,
+    0x92722c851482353bULL,
+    0xa2bfe8a14cf10364ULL,
+    0xa81a664bbc423001ULL,
+    0xc24b8b70d0f89791ULL,
+    0xc76c51a30654be30ULL,
+    0xd192e819d6ef5218ULL,
+    0xd69906245565a910ULL,
+    0xf40e35855771202aULL,
+    0x106aa07032bbd1b8ULL,
+    0x19a4c116b8d2d0c8ULL,
+    0x1e376c085141ab53ULL,
+    0x2748774cdf8eeb99ULL,
+    0x34b0bcb5e19b48a8ULL,
+    0x391c0cb3c5c95a63ULL,
+    0x4ed8aa4ae3418acbULL,
+    0x5b9cca4f7763e373ULL,
+    0x682e6ff3d6b2b8a3ULL,
+    0x748f82ee5defb2fcULL,
+    0x78a5636f43172f60ULL,
+    0x84c87814a1f0ab72ULL,
+    0x8cc702081a6439ecULL,
+    0x90befffa23631e28ULL,
+    0xa4506cebde82bde9ULL,
+    0xbef9a3f7b2c67915ULL,
+    0xc67178f2e372532bULL,
+    0xca273eceea26619cULL,
+    0xd186b8c721c0c207ULL,
+    0xeada7dd6cde0eb1eULL,
+    0xf57d4f7fee6ed178ULL,
+    0x06f067aa72176fbaULL,
+    0x0a637dc5a2c898a6ULL,
+    0x113f9804bef90daeULL,
+    0x1b710b35131c471bULL,
+    0x28db77f523047d84ULL,
+    0x32caab7b40c72493ULL,
+    0x3c9ebe0a15c9bebcULL,
+    0x431d67c49c100d4cULL,
+    0x4cc5d4becb3e42b6ULL,
+    0x597f299cfc657e2aULL,
+    0x5fcb6fab3ad6faecULL,
+    0x6c44198c4a475817ULL,
 };
 
 /*
- * SHA512Init: 初始化信息结构
+ * sha512_init: 初始化信息结构
  * ctx: sha512信息结构
  */
-int SHA512Init(SHA512Ctx *ctx)
+int sha512_init(sha512_ctx *ctx)
 {
     ctx->h[0] = 0x6A09E667F3BCC908ULL;
     ctx->h[1] = 0xBB67AE8584CAA73BULL;
@@ -52,29 +105,33 @@ int SHA512Init(SHA512Ctx *ctx)
     return 1;
 }
 
-#define CH(x, y, z)     (((x) & (y)) ^ ((~(x)) & (z)))
-#define MAJ(x, y, z)    (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
+#define CH(x, y, z) (((x) & (y)) ^ ((~(x)) & (z)))
+#define MAJ(x, y, z) (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))
 
-#define SIGMA0(x)       (ror64(x, 28) ^ ror64(x, 34) ^ ror64(x, 39))
-#define SIGMA1(x)       (ror64(x, 14) ^ ror64(x, 18) ^ ror64(x, 41))
+#define SIGMA0(x) (ror64(x, 28) ^ ror64(x, 34) ^ ror64(x, 39))
+#define SIGMA1(x) (ror64(x, 14) ^ ror64(x, 18) ^ ror64(x, 41))
 
-#define GAMMA0(x)       (ror64(x, 1) ^ ror64(x, 8) ^ (x >> 7))
-#define GAMMA1(x)       (ror64(x, 19) ^ ror64(x, 61) ^ (x >> 6))
+#define GAMMA0(x) (ror64(x, 1) ^ ror64(x, 8) ^ (x >> 7))
+#define GAMMA1(x) (ror64(x, 19) ^ ror64(x, 61) ^ (x >> 6))
 
-#define ROUND_00_15(i, a, b, c, d, e, f, g, h) do {         \
-    temp += h + SIGMA1(e) + CH(e, f, g) + sha512_K[i];      \
-    h = SIGMA0(a) + MAJ(a, b, c);                           \
-    d += temp;                                              \
-    h += temp;                                              \
+#define ROUND_00_15(i, a, b, c, d, e, f, g, h)             \
+    do                                                     \
+    {                                                      \
+        temp += h + SIGMA1(e) + CH(e, f, g) + sha512_K[i]; \
+        h = SIGMA0(a) + MAJ(a, b, c);                      \
+        d += temp;                                         \
+        h += temp;                                         \
     } while (0)
 
-#define ROUND_16_80(i, j, a, b, c, d, e, f, g, h, x) do {   \
-    s0 = x[(j + 1) & 0x0f];                                 \
-    s0 = GAMMA0(s0);                                        \
-    s1 = x[(j + 14) & 0x0f];                                \
-    s1 = GAMMA1(s1);                                        \
-    temp = x[(j) & 0x0f] += s0 + s1 + x[(j + 9) & 0x0f];    \
-    ROUND_00_15(i + j, a, b, c, d, e, f, g, h);             \
+#define ROUND_16_80(i, j, a, b, c, d, e, f, g, h, x)         \
+    do                                                       \
+    {                                                        \
+        s0 = x[(j + 1) & 0x0f];                              \
+        s0 = GAMMA0(s0);                                     \
+        s1 = x[(j + 14) & 0x0f];                             \
+        s1 = GAMMA1(s1);                                     \
+        temp = x[(j) & 0x0f] += s0 + s1 + x[(j + 9) & 0x0f]; \
+        ROUND_00_15(i + j, a, b, c, d, e, f, g, h);          \
     } while (0)
 
 /*
@@ -83,14 +140,14 @@ int SHA512Init(SHA512Ctx *ctx)
  * data: 块数据起始地址
  * num: 块数量
  */
-static void SHA512BlockCal(SHA512Ctx *ctx, const void *data, size_t num)
+static void SHA512BlockCal(sha512_ctx *ctx, const void *data, size_t num)
 {
     uint_64 a, b, c, d, e, f, g, h;
     uint_64 s0, s1, temp, x[16];
     const uint_64 *w = data;
     int i;
 
-    while(num--) {
+    while (num--) {
         a = ctx->h[0];
         b = ctx->h[1];
         c = ctx->h[2];
@@ -201,13 +258,13 @@ static void SHA512BlockCal(SHA512Ctx *ctx, const void *data, size_t num)
 }
 
 /*
- * SHA512Update: 更新摘要
+ * sha512_update: 更新摘要
  * ctx: sha512信息结构
  * msg: 待处理数据
  * len: 数据长度，单位字节
  * 返回值: 1表示成功，0表示失败
  */
-int SHA512Update(SHA512Ctx *ctx,const void *msg, size_t len)
+int sha512_update(sha512_ctx *ctx, const void *msg, size_t len)
 {
     uint_64 l;
     unsigned char *p = (unsigned char *)ctx->data;
@@ -224,19 +281,21 @@ int SHA512Update(SHA512Ctx *ctx,const void *msg, size_t len)
     }
     /* 如果len变量类型大小大于等于8，说明至少是64位系统，以下操作保证处理极大数据量时也可以保证精度，这块参考了openssl */
     if (sizeof(len) >= 8) {
-    /* 由于要记录位数，因此实际结果要乘以8，即左移3位，所以这里是61 */
+        /* 由于要记录位数，因此实际结果要乘以8，即左移3位，所以这里是61 */
         ctx->nh += (((uint_64)len) >> 61);
     }
     ctx->nl = l;
 
     /* 如果num不等于0，说明上次update没有处理完所有数据，memcpy时需要将新数据追加到旧数据之后 */
-    if (ctx->num!=0) {
+    if (ctx->num != 0) {
         size_t n = sizeof(ctx->data) - ctx->num;
-    
-        if (len < n) {/* 本轮待处理数据加上上次未处理数据量不足一个块 */
+
+        if (len < n) { /* 本轮待处理数据加上上次未处理数据量不足一个块 */
             memcpy(p + ctx->num, msg, len);
             return 1;
-        } else {/* 超过一个块了 */
+        }
+        else
+        { /* 超过一个块了 */
             memcpy(p + ctx->num, msg, n);
             len -= n;
             data += n;
@@ -244,11 +303,11 @@ int SHA512Update(SHA512Ctx *ctx,const void *msg, size_t len)
         }
     }
 
-/* 正式进行处理
- * 此时data指向要处理的数据起始地址，p指向ctx记录临时数据的数组data
- * len表示要处理的数据长度
- * 如果len大于一个块，可以调用SHA512BlockCal进行处理，否则将数据记录到ctx->data中，待用户下次提供数据
- */
+    /* 正式进行处理
+     * 此时data指向要处理的数据起始地址，p指向ctx记录临时数据的数组data
+     * len表示要处理的数据长度
+     * 如果len大于一个块，可以调用SHA512BlockCal进行处理，否则将数据记录到ctx->data中，待用户下次提供数据
+     */
     if (len >= sizeof(ctx->data)) {
         SHA512BlockCal(ctx, data, len / sizeof(ctx->data));
         data += len;
@@ -256,20 +315,20 @@ int SHA512Update(SHA512Ctx *ctx,const void *msg, size_t len)
         data -= len;
     }
 
-    if(len!=0) {
+    if (len != 0) {
         memcpy(p, data, len);
         ctx->num = len;
     }
     return 1;
 }
 
-/* 
- * SHA512Final: 结束摘要过程
+/*
+ * sha512_final: 结束摘要过程
  * md: 摘要存储位置
  * ctx: sha512信息结构
  * 返回值: 1表示成功，0表示失败
  */
-int SHA512Final(unsigned char *md, SHA512Ctx *ctx)
+int sha512_final(unsigned char *md, sha512_ctx *ctx)
 {
     unsigned char *p = (unsigned char *)ctx->data;
     size_t n = ctx->num;
@@ -312,90 +371,90 @@ int SHA512Final(unsigned char *md, SHA512Ctx *ctx)
 
     /* 根据md_len记录的大小设置要到处摘要的长度，此时ctx->h存储了摘要值 */
     switch (ctx->md_len) {
-        case SHA224_DIGEST_LENGTH:
-            for (n = 0; n < SHA224_DIGEST_LENGTH / 8; n++) {
-                uint_64 t = ctx->h[n];
+    case SHA224_DIGEST_LENGTH:
+        for (n = 0; n < SHA224_DIGEST_LENGTH / 8; n++) {
+            uint_64 t = ctx->h[n];
 
-                *(md++) = (unsigned char)(t >> 56);
-                *(md++) = (unsigned char)(t >> 48);
-                *(md++) = (unsigned char)(t >> 40);
-                *(md++) = (unsigned char)(t >> 32);
-                *(md++) = (unsigned char)(t >> 24);
-                *(md++) = (unsigned char)(t >> 16);
-                *(md++) = (unsigned char)(t >> 8);
-                *(md++) = (unsigned char)(t);
-                }
-            {
-                uint_64 t = ctx->h[SHA224_DIGEST_LENGTH / 8];
+            *(md++) = (unsigned char)(t >> 56);
+            *(md++) = (unsigned char)(t >> 48);
+            *(md++) = (unsigned char)(t >> 40);
+            *(md++) = (unsigned char)(t >> 32);
+            *(md++) = (unsigned char)(t >> 24);
+            *(md++) = (unsigned char)(t >> 16);
+            *(md++) = (unsigned char)(t >> 8);
+            *(md++) = (unsigned char)(t);
+        }
+        {
+            uint_64 t = ctx->h[SHA224_DIGEST_LENGTH / 8];
 
-                *(md++) = (unsigned char)(t >> 56);
-                *(md++) = (unsigned char)(t >> 48);
-                *(md++) = (unsigned char)(t >> 40);
-                *(md++) = (unsigned char)(t >> 32);
-            }
-            break;
-        case SHA256_DIGEST_LENGTH:
-            for (n = 0; n < SHA256_DIGEST_LENGTH / 8; n++) {
-                uint_64 t = ctx->h[n];
+            *(md++) = (unsigned char)(t >> 56);
+            *(md++) = (unsigned char)(t >> 48);
+            *(md++) = (unsigned char)(t >> 40);
+            *(md++) = (unsigned char)(t >> 32);
+        }
+        break;
+    case SHA256_DIGEST_LENGTH:
+        for (n = 0; n < SHA256_DIGEST_LENGTH / 8; n++) {
+            uint_64 t = ctx->h[n];
 
-                *(md++) = (unsigned char)(t >> 56);
-                *(md++) = (unsigned char)(t >> 48);
-                *(md++) = (unsigned char)(t >> 40);
-                *(md++) = (unsigned char)(t >> 32);
-                *(md++) = (unsigned char)(t >> 24);
-                *(md++) = (unsigned char)(t >> 16);
-                *(md++) = (unsigned char)(t >> 8);
-                *(md++) = (unsigned char)(t);
-            }
-            break;
-        case SHA384_DIGEST_LENGTH:
-            for (n = 0; n < SHA384_DIGEST_LENGTH / 8; n++) {
-                uint_64 t = ctx->h[n];
+            *(md++) = (unsigned char)(t >> 56);
+            *(md++) = (unsigned char)(t >> 48);
+            *(md++) = (unsigned char)(t >> 40);
+            *(md++) = (unsigned char)(t >> 32);
+            *(md++) = (unsigned char)(t >> 24);
+            *(md++) = (unsigned char)(t >> 16);
+            *(md++) = (unsigned char)(t >> 8);
+            *(md++) = (unsigned char)(t);
+        }
+        break;
+    case SHA384_DIGEST_LENGTH:
+        for (n = 0; n < SHA384_DIGEST_LENGTH / 8; n++) {
+            uint_64 t = ctx->h[n];
 
-                *(md++) = (unsigned char)(t >> 56);
-                *(md++) = (unsigned char)(t >> 48);
-                *(md++) = (unsigned char)(t >> 40);
-                *(md++) = (unsigned char)(t >> 32);
-                *(md++) = (unsigned char)(t >> 24);
-                *(md++) = (unsigned char)(t >> 16);
-                *(md++) = (unsigned char)(t >> 8);
-                *(md++) = (unsigned char)(t);
-            }
-            break;
-        case SHA512_DIGEST_LENGTH:
-            for (n = 0; n < SHA512_DIGEST_LENGTH / 8; n++) {
-                uint_64 t = ctx->h[n];
+            *(md++) = (unsigned char)(t >> 56);
+            *(md++) = (unsigned char)(t >> 48);
+            *(md++) = (unsigned char)(t >> 40);
+            *(md++) = (unsigned char)(t >> 32);
+            *(md++) = (unsigned char)(t >> 24);
+            *(md++) = (unsigned char)(t >> 16);
+            *(md++) = (unsigned char)(t >> 8);
+            *(md++) = (unsigned char)(t);
+        }
+        break;
+    case SHA512_DIGEST_LENGTH:
+        for (n = 0; n < SHA512_DIGEST_LENGTH / 8; n++) {
+            uint_64 t = ctx->h[n];
 
-                *(md++) = (unsigned char)(t >> 56);
-                *(md++) = (unsigned char)(t >> 48);
-                *(md++) = (unsigned char)(t >> 40);
-                *(md++) = (unsigned char)(t >> 32);
-                *(md++) = (unsigned char)(t >> 24);
-                *(md++) = (unsigned char)(t >> 16);
-                *(md++) = (unsigned char)(t >> 8);
-                *(md++) = (unsigned char)(t);
-            }
-            break;
-        default:
-            return 0;
+            *(md++) = (unsigned char)(t >> 56);
+            *(md++) = (unsigned char)(t >> 48);
+            *(md++) = (unsigned char)(t >> 40);
+            *(md++) = (unsigned char)(t >> 32);
+            *(md++) = (unsigned char)(t >> 24);
+            *(md++) = (unsigned char)(t >> 16);
+            *(md++) = (unsigned char)(t >> 8);
+            *(md++) = (unsigned char)(t);
+        }
+        break;
+    default:
+        return 0;
     }
     return 1;
 }
 
-/* 
- * SHA512: 根据输入数据生成摘要
+/*
+ * sha512: 根据输入数据生成摘要
  * msg: 原始数据
  * len: 数据长度，单位字节
  * md: 摘要
  * 返回值: 0表示发生错误，不等于0表示工作正常
-*/
-unsigned char *SHA512(const void *msg, size_t len, unsigned char* md)
+ */
+unsigned char *sha512(const void *msg, size_t len, unsigned char *md)
 {
-    SHA512Ctx ctx;
+    sha512_ctx ctx;
 
-    SHA512Init(&ctx);
-    if (SHA512Update(&ctx, msg, len)) {
-        if (SHA512Final(md, &ctx)) {
+    sha512_init(&ctx);
+    if (sha512_update(&ctx, msg, len)) {
+        if (sha512_final(md, &ctx)) {
             return md;
         }
     }

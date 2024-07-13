@@ -1,8 +1,8 @@
 #include "hash.h"
 
-static inline void Round(AsconState *s, uint_8 c)
+static inline void Round(ascon_state *s, uint_8 c)
 {
-    AsconState t;
+    ascon_state t;
     /* round constant */
     s->x[2] ^= c;
     /* s-box layer, 对应pdf的2.6.3 Figure 4a */
@@ -32,7 +32,7 @@ static inline void Round(AsconState *s, uint_8 c)
 }
 
 /* P12常数加法 */
-static inline void P12Rounds(AsconState *s)
+static inline void P12Rounds(ascon_state *s)
 {
     Round(s, RC0);
     Round(s, RC1);
@@ -49,7 +49,7 @@ static inline void P12Rounds(AsconState *s)
 }
 
 /* P8常数加法 */
-static inline void P8Rounds(AsconState *s)
+static inline void P8Rounds(ascon_state *s)
 {
     Round(s, RC4);
     Round(s, RC5);
@@ -62,7 +62,7 @@ static inline void P8Rounds(AsconState *s)
 }
 
 /* P6常数加法 */
-static inline void P6Rounds(AsconState *s)
+static inline void P6Rounds(ascon_state *s)
 {
     Round(s, RC6);
     Round(s, RC7);
@@ -77,51 +77,51 @@ static inline uint_64 PAD(int i)
     return 0x80ull << (56 - 8 * i);
 }
 
-static inline void AsconHashInit(AsconState *s)
+static inline void ascon_hash_init(ascon_state *s)
 {
-    s->x[0]=ASCON_IV0;
-    s->x[1]=ASCON_IV1;
-    s->x[2]=ASCON_IV2;
-    s->x[3]=ASCON_IV3;
-    s->x[4]=ASCON_IV4;
+    s->x[0] = ASCON_IV0;
+    s->x[1] = ASCON_IV1;
+    s->x[2] = ASCON_IV2;
+    s->x[3] = ASCON_IV3;
+    s->x[4] = ASCON_IV4;
 }
 
-static inline void AsconAbsorb(AsconState *s, const uint_8 *in, uint_64 inlen)
+static inline void ascon_absorb(ascon_state *s, const uint_8 *in, uint_64 inlen)
 {
-    const uint_64 *in64 = (const uint_64*)in;
-    uint_64 len = inlen/ASCON_HASH_RATE, i = 0;
+    const uint_64 *in64 = (const uint_64 *)in;
+    uint_64 len = inlen / ASCON_HASH_RATE, i = 0;
     while (len--) {
         s->x[0] ^= bswap_64(in64[i]);
         PnRounds(s);
         i++;
     }
-    s->x[0] ^= load_bytes(in, inlen);
+    s->x[0] ^= load_bytes_64(in, inlen);
     s->x[0] ^= PAD(inlen);
 }
 
-static inline void AsconSqueeze(AsconState *s, uint_8 *out, uint_64 outlen)
+static inline void ascon_squeeae(ascon_state *s, uint_8 *out, uint_64 outlen)
 {
     uint_64 *out64 = (uint_64 *)out;
-    uint_64 len = outlen/ASCON_HASH_RATE, i = 0;
+    uint_64 len = outlen / ASCON_HASH_RATE, i = 0;
     PnRounds(s);
     while (len--) {
-        out64[i]=bswap_64(s->x[0]);
+        out64[i] = bswap_64(s->x[0]);
         PnRounds(s);
         i++;
     }
-    store_bytes(out, s->x[0], outlen);
+    store_bytes_64(out, s->x[0], outlen);
 }
 
-int AsconXof(uint_8 *out, uint_64 outlen, const uint_8 *in, uint_64 inlen)
+int ascon_xof(uint_8 *out, uint_64 outlen, const uint_8 *in, uint_64 inlen)
 {
-    AsconState s;
-    AsconHashInit(&s);
-    AsconAbsorb(&s, in, inlen);
-    AsconSqueeze(&s, out, outlen);
+    ascon_state s;
+    ascon_hash_init(&s);
+    ascon_absorb(&s, in, inlen);
+    ascon_squeeae(&s, out, outlen);
     return 0;
 }
 
-int AsconHash(const void *msg, size_t len, unsigned char *md)
+int ascon_hash(const void *msg, size_t len, unsigned char *md)
 {
-    return AsconXof(md, CRYPTO_BYTES, msg, len);
+    return ascon_xof(md, CRYPTO_BYTES, msg, len);
 }

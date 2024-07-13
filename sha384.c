@@ -1,10 +1,10 @@
 #include "sha.h"
 
 /*
- * SHA512Init: 初始化信息结构
+ * sha512_init: 初始化信息结构
  * ctx: sha512信息结构
  */
-int SHA384Init(SHA384Ctx *ctx)
+int sha384_init(sha384_ctx *ctx)
 {
     ctx->h[0] = 0xCBBB9D5DC1059ED8ULL;
     ctx->h[1] = 0x629A292A367CD507ULL;
@@ -17,27 +17,27 @@ int SHA384Init(SHA384Ctx *ctx)
     ctx->nl = 0;
     ctx->nh = 0;
     ctx->num = 0;
-    ctx->md_len=SHA384_DIGEST_LENGTH;
+    ctx->md_len = SHA384_DIGEST_LENGTH;
     return 1;
 }
 
-int SHA384Update(SHA384Ctx *ctx,const void *msg, size_t len)
+int sha384_update(sha384_ctx *ctx, const void *msg, size_t len)
 {
-    return SHA512Update((SHA512Ctx*)ctx, msg, len);
+    return sha512_update((sha512_ctx *)ctx, msg, len);
 }
 
-int SHA384Final(unsigned char *md, SHA384Ctx *ctx)
+int sha384_final(unsigned char *md, sha384_ctx *ctx)
 {
-    return SHA512Final(md, (SHA512Ctx*)ctx);
+    return sha512_final(md, (sha512_ctx *)ctx);
 }
 
-unsigned char *SHA384(const void *msg, size_t len, unsigned char* md)
+unsigned char *sha384(const void *msg, size_t len, unsigned char *md)
 {
-    SHA384Ctx ctx;
+    sha384_ctx ctx;
 
-    SHA384Init(&ctx);
-    if (SHA384Update(&ctx, msg, len)) {
-        if (SHA384Final(md, &ctx)) {
+    sha384_init(&ctx);
+    if (sha384_update(&ctx, msg, len)) {
+        if (sha384_final(md, &ctx)) {
             return md;
         }
     }

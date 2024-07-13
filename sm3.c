@@ -1,22 +1,22 @@
 #include "sm3.h"
 
-int SM3Init(Sm3Ctx *c)
+int sm3_init(sm3_ctx *c)
 {
-    c->h[0]=0x7380166F;
-    c->h[1]=0x4914B2B9;
-    c->h[2]=0x172442D7;
-    c->h[3]=0xDA8A0600;
-    c->h[4]=0xA96F30BC;
-    c->h[5]=0x163138AA;
-    c->h[6]=0xE38DEE4D;
-    c->h[7]=0xB0FB0E4E;
-    c->n=0;
-    c->num=0;
+    c->h[0] = 0x7380166F;
+    c->h[1] = 0x4914B2B9;
+    c->h[2] = 0x172442D7;
+    c->h[3] = 0xDA8A0600;
+    c->h[4] = 0xA96F30BC;
+    c->h[5] = 0x163138AA;
+    c->h[6] = 0xE38DEE4D;
+    c->h[7] = 0xB0FB0E4E;
+    c->n = 0;
+    c->num = 0;
     return 1;
 }
 
 #define FF_00_15(x, y, z) (x ^ y ^ z)
-#define FF_16_63(x,y,z) ((x&y)|(x&z)|(y&z))
+#define FF_16_63(x, y, z) ((x & y) | (x & z) | (y & z))
 
 #define GG_00_15(x, y, z) (x ^ y ^ z)
 #define GG_16_63(x, y, z) ((x & y) | ((~x) & z))
@@ -29,7 +29,7 @@ int SM3Init(Sm3Ctx *c)
  * data: 数据地址
  * n: 要处理的块数
  */
-static void SM3BlockCal(Sm3Ctx *ctx, const void *data, size_t n)
+static void SM3BlockCal(sm3_ctx *ctx, const void *data, size_t n)
 {
     volatile uint_32 a, b, c, d, e, f, g, h;
     volatile uint_32 ss1, ss2, tt1, tt2;
@@ -99,66 +99,68 @@ static void SM3BlockCal(Sm3Ctx *ctx, const void *data, size_t n)
     }
 }
 
-int SM3Update(Sm3Ctx *c, const void *msg, size_t len)
+int sm3_update(sm3_ctx *c, const void *msg, size_t len)
 {
     uint_32 l;
-    unsigned char *p=(unsigned char *)c->data;
-    const unsigned char *data=(const unsigned char *)msg;
+    unsigned char *p = (unsigned char *)c->data;
+    const unsigned char *data = (const unsigned char *)msg;
 
-    if (len==0)
+    if (len == 0)
         return 0;
     l = c->n + (len << 3);
     if (l < c->n) { /* 超出最大数据量 */
         return 0;
     }
-    c->n=l;
+    c->n = l;
     /* 上轮处理还有剩余数据 */
-    if (c->num!=0) {
+    if (c->num != 0) {
         size_t n = sizeof(c->data) - c->num;
         if (len < n) {
-            memcpy(p+c->num,data,len);
+            memcpy(p + c->num, data, len);
             return 1;
-        } else {
-            memcpy(p +c->num,data,n);
-            len-=n;
-            data+=n;
+        }
+        else
+        {
+            memcpy(p + c->num, data, n);
+            len -= n;
+            data += n;
             SM3BlockCal(c, c->data, 1);
         }
     }
-/* 此时data指向要处理的数据，len表示要处理的长度
- * 如果len大于一个块（64字节）的长度，可以进行处理
- */
-    if (len>=sizeof(c->data)) {
-        SM3BlockCal(c,data,len/sizeof(c->data));
-        data+=len;
-        len%=sizeof(c->data);
-        data-=len;
+    /* 此时data指向要处理的数据，len表示要处理的长度
+     * 如果len大于一个块（64字节）的长度，可以进行处理
+     */
+    if (len >= sizeof(c->data)) {
+        SM3BlockCal(c, data, len / sizeof(c->data));
+        data += len;
+        len %= sizeof(c->data);
+        data -= len;
     }
     /* 数据不够一个块，记录到c.data中，等待下次输入 */
-    if(len!=0) {
-        memcpy(c->data,data,len);
-        c->num=len;
+    if (len != 0) {
+        memcpy(c->data, data, len);
+        c->num = len;
     }
     return 1;
 }
 
-int SM3Final(unsigned char *md, Sm3Ctx *c)
+int sm3_final(unsigned char *md, sm3_ctx *c)
 {
-    unsigned char *p=(unsigned char*)c->data;
+    unsigned char *p = (unsigned char *)c->data;
     size_t n = c->num;
 
     /* 此时c->data肯定是不足64字节的，在数据最后一位加1 */
-    p[n]=0x80;
+    p[n] = 0x80;
     n++;
-    
+
     /* 如果此时data中的数据量不够留出8字节，则先处理当前块 */
     if (n > (sizeof(c->data) - 8)) {
-        memset(p+n,0,sizeof(c->data)-n);
-        n=0;
-        SM3BlockCal(c,p,1);
+        memset(p + n, 0, sizeof(c->data) - n);
+        n = 0;
+        SM3BlockCal(c, p, 1);
     }
 
-    memset(p+n, 0, sizeof(c->data)-n-8);
+    memset(p + n, 0, sizeof(c->data) - n - 8);
     p[sizeof(c->data) - 1] = (unsigned char)(c->n);
     p[sizeof(c->data) - 2] = (unsigned char)(c->n >> 8);
     p[sizeof(c->data) - 3] = (unsigned char)(c->n >> 16);
@@ -168,7 +170,7 @@ int SM3Final(unsigned char *md, Sm3Ctx *c)
     p[sizeof(c->data) - 7] = (unsigned char)(c->n >> 48);
     p[sizeof(c->data) - 8] = (unsigned char)(c->n >> 56);
     SM3BlockCal(c, p, 1);
-    if(md==NULL) {
+    if (md == NULL) {
         return 0;
     }
     uint_32 t;
@@ -183,13 +185,13 @@ int SM3Final(unsigned char *md, Sm3Ctx *c)
     return 1;
 }
 
-unsigned char *SM3(const void *msg, size_t len, unsigned char* md)
+unsigned char *sm3(const void *msg, size_t len, unsigned char *md)
 {
-    Sm3Ctx ctx;
+    sm3_ctx ctx;
 
-    SM3Init(&ctx);
-    if (SM3Update(&ctx, msg, len)) {
-        if (SM3Final(md, &ctx)) {
+    sm3_init(&ctx);
+    if (sm3_update(&ctx, msg, len)) {
+        if (sm3_final(md, &ctx)) {
             return md;
         }
     }
