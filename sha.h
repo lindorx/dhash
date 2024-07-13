@@ -3,7 +3,7 @@
 #include <string.h>
 #include <byteswap.h>
 
-#include "los_compiler.h"
+#include "types.h"
 #include "bitops.h"
 
 #define SHA224_DIGEST_LENGTH (28)
@@ -11,24 +11,24 @@
 #define SHA384_DIGEST_LENGTH (48)
 #define SHA512_DIGEST_LENGTH (64)
 
-#define B(x, j)     (((UINT64)(*(((const unsigned char *)(&x)) + j))) << ((7 - j) * 8))
+#define B(x, j)     (((uint_64)(*(((const unsigned char *)(&x)) + j))) << ((7 - j) * 8))
 #define PULL64(x)   (B(x, 0) | B(x, 1) | B(x, 2) | B(x, 3) | B(x, 4) | B(x, 5) | B(x, 6) | B(x, 7))
 
 /* 摘要长度，16*8字节 */
 #define SHA_LBLOCK 16
 
 typedef struct sha256_context {
-    UINT32 h[8];
-    UINT64 n;
-    UINT32 data[SHA_LBLOCK];
+    uint_32 h[8];
+    uint_64 n;
+    uint_32 data[SHA_LBLOCK];
     unsigned int num;
     unsigned int md_len;
 } SHA256Ctx, SHA224Ctx;
 
 typedef struct sha512_context {
-    UINT64 h[8];                    /* 初始向量 */
-    UINT64 nl, nh;                  /* 存储已经处理的数据长度，最大长度为2^128，nl存储低64位，nh存储高64位 */
-    UINT64 data[SHA_LBLOCK];        /* 存储一轮需要处理的数据，如果本轮数据没有处理完，剩余不足1024位，则也存在这里 */
+    uint_64 h[8];                    /* 初始向量 */
+    uint_64 nl, nh;                  /* 存储已经处理的数据长度，最大长度为2^128，nl存储低64位，nh存储高64位 */
+    uint_64 data[SHA_LBLOCK];        /* 存储一轮需要处理的数据，如果本轮数据没有处理完，剩余不足1024位，则也存在这里 */
     unsigned int num;               /* 记录当前块尚未处理的数据量 */
     unsigned int md_len;            /* 要截取摘要的长度 */
 } SHA512Ctx, SHA384Ctx;

@@ -1,6 +1,6 @@
 #include "hash.h"
 
-static inline void Round(AsconState *s, UINT8 c)
+static inline void Round(AsconState *s, uint_8 c)
 {
     AsconState t;
     /* round constant */
@@ -72,7 +72,7 @@ static inline void P6Rounds(AsconState *s)
     Round(s, RCb);
 }
 
-static inline UINT64 PAD(int i)
+static inline uint_64 PAD(int i)
 {
     return 0x80ull << (56 - 8 * i);
 }
@@ -86,10 +86,10 @@ static inline void AsconHashInit(AsconState *s)
     s->x[4]=ASCON_IV4;
 }
 
-static inline void AsconAbsorb(AsconState *s, const UINT8 *in, UINT64 inlen)
+static inline void AsconAbsorb(AsconState *s, const uint_8 *in, uint_64 inlen)
 {
-    const UINT64 *in64 = (const UINT64*)in;
-    UINT64 len = inlen/ASCON_HASH_RATE, i = 0;
+    const uint_64 *in64 = (const uint_64*)in;
+    uint_64 len = inlen/ASCON_HASH_RATE, i = 0;
     while (len--) {
         s->x[0] ^= bswap_64(in64[i]);
         PnRounds(s);
@@ -99,10 +99,10 @@ static inline void AsconAbsorb(AsconState *s, const UINT8 *in, UINT64 inlen)
     s->x[0] ^= PAD(inlen);
 }
 
-static inline void AsconSqueeze(AsconState *s, UINT8 *out, UINT64 outlen)
+static inline void AsconSqueeze(AsconState *s, uint_8 *out, uint_64 outlen)
 {
-    UINT64 *out64 = (UINT64 *)out;
-    UINT64 len = outlen/ASCON_HASH_RATE, i = 0;
+    uint_64 *out64 = (uint_64 *)out;
+    uint_64 len = outlen/ASCON_HASH_RATE, i = 0;
     PnRounds(s);
     while (len--) {
         out64[i]=bswap_64(s->x[0]);
@@ -112,7 +112,7 @@ static inline void AsconSqueeze(AsconState *s, UINT8 *out, UINT64 outlen)
     store_bytes(out, s->x[0], outlen);
 }
 
-int AsconXof(UINT8 *out, UINT64 outlen, const UINT8 *in, UINT64 inlen)
+int AsconXof(uint_8 *out, uint_64 outlen, const uint_8 *in, uint_64 inlen)
 {
     AsconState s;
     AsconHashInit(&s);

@@ -31,10 +31,10 @@ int SM3Init(Sm3Ctx *c)
  */
 static void SM3BlockCal(Sm3Ctx *ctx, const void *data, size_t n)
 {
-    volatile UINT32 a, b, c, d, e, f, g, h;
-    volatile UINT32 ss1, ss2, tt1, tt2;
-    UINT32 w[68], w1[64], i;
-    UINT32 *p = (UINT32 *)data;
+    volatile uint_32 a, b, c, d, e, f, g, h;
+    volatile uint_32 ss1, ss2, tt1, tt2;
+    uint_32 w[68], w1[64], i;
+    uint_32 *p = (uint_32 *)data;
 
     while (n--) {
         /* 大端化处理 */
@@ -101,7 +101,7 @@ static void SM3BlockCal(Sm3Ctx *ctx, const void *data, size_t n)
 
 int SM3Update(Sm3Ctx *c, const void *msg, size_t len)
 {
-    UINT32 l;
+    uint_32 l;
     unsigned char *p=(unsigned char *)c->data;
     const unsigned char *data=(const unsigned char *)msg;
 
@@ -171,7 +171,7 @@ int SM3Final(unsigned char *md, Sm3Ctx *c)
     if(md==NULL) {
         return 0;
     }
-    UINT32 t;
+    uint_32 t;
 
     for (n = 0; n < SM3_DIGEST_LENGTH / 4; ++n) {
         t = c->h[n];

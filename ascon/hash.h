@@ -6,14 +6,14 @@
 #include <string.h>
 #include <byteswap.h>
 
-#include "los_compiler.h"
+#include "../types.h"
 #include "bitops.h"
 #include "config.h"
 
 typedef union {
-  UINT64 x[5];
-  UINT64 w[5][2];
-  UINT8 b[5][8];
+  uint_64 x[5];
+  uint_64 w[5][2];
+  uint_8 b[5][8];
 } AsconState;
 
 #define CRYPTO_BYTES 32

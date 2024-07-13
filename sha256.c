@@ -1,6 +1,6 @@
 #include "sha.h"
 
-typedef UINT32 uint32_t;
+typedef uint_32 uint32_t;
 
 const uint32_t sha256_K[64] = {
     0x428a2f98UL, 0x71374491UL, 0xb5c0fbcfUL, 0xe9b5dba5UL,
@@ -101,7 +101,7 @@ void SHA256BlockCal(SHA256Ctx *ctx, const void *msg, size_t num)
 
 int SHA256Update(SHA256Ctx *c, const void *msg, size_t len)
 {
-    UINT32 l;
+    uint_32 l;
     unsigned char *p = (unsigned char *)c->data;
     const unsigned char *data = (const unsigned char *)msg;
 
@@ -174,8 +174,8 @@ int SHA256Final(unsigned char *md, SHA256Ctx *ctx)
 
     switch (ctx->md_len) {
     case SHA224_DIGEST_LENGTH:
-    for (n = 0; n < SHA224_DIGEST_LENGTH / sizeof(UINT32); n++) {
-        UINT32 t = ctx->h[n];
+    for (n = 0; n < SHA224_DIGEST_LENGTH / sizeof(uint_32); n++) {
+        uint_32 t = ctx->h[n];
 
         *(md++) = (unsigned char)(t >> 24);
         *(md++) = (unsigned char)(t >> 16);
@@ -184,8 +184,8 @@ int SHA256Final(unsigned char *md, SHA256Ctx *ctx)
     }
         break;
     case SHA256_DIGEST_LENGTH:
-    for (n = 0; n < SHA256_DIGEST_LENGTH / sizeof(UINT32); n++) {
-        UINT32 t = ctx->h[n];
+    for (n = 0; n < SHA256_DIGEST_LENGTH / sizeof(uint_32); n++) {
+        uint_32 t = ctx->h[n];
 
         *(md++) = (unsigned char)(t >> 24);
         *(md++) = (unsigned char)(t >> 16);

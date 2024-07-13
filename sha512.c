@@ -1,7 +1,7 @@
 #include "sha.h"
 
 /* 常数表 */
-static const UINT64 sha512_K[80] = {
+static const uint_64 sha512_K[80] = {
     0x428a2f98d728ae22ULL, 0x7137449123ef65cdULL, 0xb5c0fbcfec4d3b2fULL,
     0xe9b5dba58189dbbcULL, 0x3956c25bf348b538ULL, 0x59f111f1b605d019ULL,
     0x923f82a4af194f9bULL, 0xab1c5ed5da6d8118ULL, 0xd807aa98a3030242ULL,
@@ -85,9 +85,9 @@ int SHA512Init(SHA512Ctx *ctx)
  */
 static void SHA512BlockCal(SHA512Ctx *ctx, const void *data, size_t num)
 {
-    UINT64 a, b, c, d, e, f, g, h;
-    UINT64 s0, s1, temp, x[16];
-    const UINT64 *w = data;
+    uint_64 a, b, c, d, e, f, g, h;
+    uint_64 s0, s1, temp, x[16];
+    const uint_64 *w = data;
     int i;
 
     while(num--) {
@@ -209,7 +209,7 @@ static void SHA512BlockCal(SHA512Ctx *ctx, const void *data, size_t num)
  */
 int SHA512Update(SHA512Ctx *ctx,const void *msg, size_t len)
 {
-    UINT64 l;
+    uint_64 l;
     unsigned char *p = (unsigned char *)ctx->data;
     const unsigned char *data = (const unsigned char *)msg;
 
@@ -217,7 +217,7 @@ int SHA512Update(SHA512Ctx *ctx,const void *msg, size_t len)
         return 0;
     }
     /*  记录已经处理过的长度 */
-    l = (ctx->nl + (((UINT64)len) << 3)) & 0xffffffffffffffffULL;
+    l = (ctx->nl + (((uint_64)len) << 3)) & 0xffffffffffffffffULL;
     /* 如果l小于nl说明发生进位 */
     if (l < ctx->nl) {
         ctx->nh++;
@@ -225,7 +225,7 @@ int SHA512Update(SHA512Ctx *ctx,const void *msg, size_t len)
     /* 如果len变量类型大小大于等于8，说明至少是64位系统，以下操作保证处理极大数据量时也可以保证精度，这块参考了openssl */
     if (sizeof(len) >= 8) {
     /* 由于要记录位数，因此实际结果要乘以8，即左移3位，所以这里是61 */
-        ctx->nh += (((UINT64)len) >> 61);
+        ctx->nh += (((uint_64)len) >> 61);
     }
     ctx->nl = l;
 
@@ -314,7 +314,7 @@ int SHA512Final(unsigned char *md, SHA512Ctx *ctx)
     switch (ctx->md_len) {
         case SHA224_DIGEST_LENGTH:
             for (n = 0; n < SHA224_DIGEST_LENGTH / 8; n++) {
-                UINT64 t = ctx->h[n];
+                uint_64 t = ctx->h[n];
 
                 *(md++) = (unsigned char)(t >> 56);
                 *(md++) = (unsigned char)(t >> 48);
@@ -326,7 +326,7 @@ int SHA512Final(unsigned char *md, SHA512Ctx *ctx)
                 *(md++) = (unsigned char)(t);
                 }
             {
-                UINT64 t = ctx->h[SHA224_DIGEST_LENGTH / 8];
+                uint_64 t = ctx->h[SHA224_DIGEST_LENGTH / 8];
 
                 *(md++) = (unsigned char)(t >> 56);
                 *(md++) = (unsigned char)(t >> 48);
@@ -336,7 +336,7 @@ int SHA512Final(unsigned char *md, SHA512Ctx *ctx)
             break;
         case SHA256_DIGEST_LENGTH:
             for (n = 0; n < SHA256_DIGEST_LENGTH / 8; n++) {
-                UINT64 t = ctx->h[n];
+                uint_64 t = ctx->h[n];
 
                 *(md++) = (unsigned char)(t >> 56);
                 *(md++) = (unsigned char)(t >> 48);
@@ -350,7 +350,7 @@ int SHA512Final(unsigned char *md, SHA512Ctx *ctx)
             break;
         case SHA384_DIGEST_LENGTH:
             for (n = 0; n < SHA384_DIGEST_LENGTH / 8; n++) {
-                UINT64 t = ctx->h[n];
+                uint_64 t = ctx->h[n];
 
                 *(md++) = (unsigned char)(t >> 56);
                 *(md++) = (unsigned char)(t >> 48);
@@ -364,7 +364,7 @@ int SHA512Final(unsigned char *md, SHA512Ctx *ctx)
             break;
         case SHA512_DIGEST_LENGTH:
             for (n = 0; n < SHA512_DIGEST_LENGTH / 8; n++) {
-                UINT64 t = ctx->h[n];
+                uint_64 t = ctx->h[n];
 
                 *(md++) = (unsigned char)(t >> 56);
                 *(md++) = (unsigned char)(t >> 48);
