@@ -1,4 +1,4 @@
-#include "sha.h"
+#include <sha.h>
 
 /* 常数表 */
 static const uint_64 sha512_K[80] = {

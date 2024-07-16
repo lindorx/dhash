@@ -1,4 +1,4 @@
-#include "sha.h"
+#include <sha.h>
 
 typedef uint_32 uint32_t;
 

@@ -1,4 +1,4 @@
-#include "sm3.h"
+#include <sm3.h>
 
 int sm3_init(sm3_ctx *c)
 {

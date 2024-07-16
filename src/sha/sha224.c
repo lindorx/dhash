@@ -1,4 +1,4 @@
-#include "sha.h"
+#include <sha.h>
 
 int sha224_init(sha224_ctx *ctx)
 {

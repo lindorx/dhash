@@ -1,4 +1,4 @@
-#include "hash.h"
+#include <hash.h>
 
 static inline void Round(ascon_state *s, uint_8 c)
 {

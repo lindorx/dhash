@@ -1,4 +1,4 @@
-#include "sha.h"
+#include <sha.h>
 
 /*
  * sha512_init: 初始化信息结构
