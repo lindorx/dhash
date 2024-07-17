@@ -1,5 +1,5 @@
-#ifndef _HWLITEOS_CRYPTO_BITOPS_H
-#define _HWLITEOS_CRYPTO_BITOPS_H
+#ifndef _DHASH_CRYPTO_BITOPS_H
+#define _DHASH_CRYPTO_BITOPS_H
 
 #include <stdlib.h>
 #include <byteswap.h>
@@ -41,4 +41,4 @@ static inline void store_bytes_64(buint8_t *bytes, buint64_t w, buint32_t n)
     memcpy(bytes, &x, n);
 }
 
-#endif /* _HWLITEOS_CRYPTO_BITOPS_H */
+#endif /* _DHASH_CRYPTO_BITOPS_H */

@@ -1,5 +1,5 @@
-#ifndef _HWLITEOS_CRYPTO_ASCON_CONFIG_H
-#define _HWLITEOS_CRYPTO_ASCON_CONFIG_H
+#ifndef _DHASH_CRYPTO_ASCON_CONFIG_H
+#define _DHASH_CRYPTO_ASCON_CONFIG_H
 
 #include "constants.h"
 
@@ -41,4 +41,4 @@
 
 #endif
 
-#endif
+#endif /* _DHASH_CRYPTO_ASCON_CONFIG_H */

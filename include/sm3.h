@@ -1,5 +1,5 @@
-#ifndef _HWLITEOS_CRYPTO_SM3_H
-#define _HWLITEOS_CRYPTO_SM3_H
+#ifndef _DHASH_CRYPTO_SM3_H
+#define _DHASH_CRYPTO_SM3_H
 #include <string.h>
 #include <byteswap.h>
 
@@ -22,4 +22,4 @@ int sm3_update(sm3_ctx *c, const void *msg, size_t len);
 int sm3_final(unsigned char *md, sm3_ctx *c);
 unsigned char *sm3(const void *msg, size_t len, unsigned char *md);
 
-#endif /* _HWLITEOS_CRYPTO_SM3_H */
+#endif /* _DHASH_CRYPTO_SM3_H */

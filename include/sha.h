@@ -1,5 +1,5 @@
-#ifndef _HWLITEOS_CRYPTO_SHA_H
-#define _HWLITEOS_CRYPTO_SHA_H
+#ifndef _DHASH_CRYPTO_SHA_H
+#define _DHASH_CRYPTO_SHA_H
 #include <string.h>
 #include <byteswap.h>
 
@@ -55,4 +55,4 @@ int sha512_update(sha512_ctx *ctx, const void *msg, size_t len);
 int sha512_final(unsigned char *md, sha512_ctx *ctx);
 unsigned char *sha512(const void *msg, size_t len, unsigned char *md);
 
-#endif /* _HWLITEOS_CRYPTO_SHA_H */
+#endif /* _DHASH_CRYPTO_SHA_H */
