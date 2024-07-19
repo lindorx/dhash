@@ -1,4 +1,6 @@
-#include <hash.h>
+#include <ascon_hash.h>
+
+#include "config.h"
 
 static inline void Round(ascon_state *s, uint_8 c)
 {

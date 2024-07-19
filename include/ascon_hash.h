@@ -6,9 +6,8 @@
 #include <string.h>
 #include <byteswap.h>
 
-#include "../types.h"
-#include "bitops.h"
-#include "config.h"
+#include <types.h>
+#include <bitops.h>
 
 typedef union
 {
