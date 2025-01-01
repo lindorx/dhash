@@ -18,4 +18,6 @@ typedef union
 
 #define CRYPTO_BYTES 32
 
+int ascon_hash(const void *msg, size_t len, unsigned char *md);
+
 #endif /* _DHASH_CRYPTO_ASCON_HASH_H */

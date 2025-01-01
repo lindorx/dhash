@@ -22,7 +22,6 @@ void *binary2string(const void *p, size_t pn, char *s, size_t sn)
 
 void print_binary(const void *p, size_t n)
 {
-    int i, j;
     char str[n * 2 + 1];
 
     if (binary2string(p, n, str, n * 2))
