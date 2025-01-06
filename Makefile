@@ -22,7 +22,8 @@ $(DHASH_SO): $(OBJS)
 	echo $(ALL_SRCS)
 	mkdir -p $(DHASH_PATH_INCLUDE) $(DHASH_PATH_LIB)
 	cp $(INCLUDE)/* $(DHASH_PATH_INCLUDE)
-	$(CC) $(CFLAGS) -shared -o $(DHASH_SO) $(OBJS) 
+	$(CC) $(CFLAGS) -shared -o $(DHASH_SO) $(OBJS)
+	cp $(DHASH_SO) $(DHASH_PATH_LIB)
 
 $(DEP): %.d: %.c
 	$(CC) $(CFLAGS) -MM $< > $@
@@ -34,8 +35,8 @@ $(DEP): %.d: %.c
 
 install: $(DHASH_SO)
 	mkdir -p $(BASE_PATH_INCLUDE)
-	cp $(DHASH_SO) $(BASE_PATH_LIB)
-	CP $(INCLUDE)/* $(BASE_PATH_INCLUDE)
+	cp $(DHASH_PATH_LIB)/* $(BASE_PATH_LIB)
+	cp $(INCLUDE)/* $(BASE_PATH_INCLUDE)
 
 uninstall:
 	rm $(BASE_PATH_LIB)/$(DHASH_SO) $(BASE_PATH_INCLUDE)
