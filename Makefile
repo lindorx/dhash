@@ -1,4 +1,7 @@
+VERSION=0.1
 CC = gcc
+
+DEB_PKG=libdhash-$(VERSION).amd64.deb
 
 .SUFFIXES: .c .o
 .PHONY: build install uninstall test clean
@@ -17,6 +20,7 @@ OBJS = $(ALL_SRCS:.c=.o)
 
 CFLAGS = -I $(INCLUDE)
 
+all: build
 build: $(DHASH_SO)
 $(DHASH_SO): $(OBJS)
 	echo $(ALL_SRCS)
@@ -45,6 +49,29 @@ TEST_BIN = test/test.out
 test: $(TEST_BIN)
 $(TEST_BIN): test/main.c $(DHASH_SO)
 	$(CC) $(CFLAGS) $^ $(DHASH_SO) -o $(TEST_BIN)
+
+
+
+DESTDIR=debian/tmp
+MAIN_BIN=dhash-test
+
+deb-install: $(DHASH_SO)
+	# 安装头文件
+	install -d $(DESTDIR)/usr/include/dhash
+	cp include/*.h $(DESTDIR)/usr/include/dhash/
+	
+	# 安装共享库
+	install -d $(DESTDIR)/usr/lib/x86_64-linux-gnu
+	install -m 644 libdhash.so $(DESTDIR)/usr/lib/x86_64-linux-gnu/
+	ln -sf libdhash.so $(DESTDIR)/usr/lib/x86_64-linux-gnu/libdhash.so
+	
+	# 安装测试程序
+	install -d $(DESTDIR)/usr/bin
+	install -m 755 $(MAIN_BIN) $(DESTDIR)/usr/bin/
+
+deb: deb-install
+
+$(DEB_PKG): deb
 
 clean:
 	rm -rf test/*.out $(DHASH_PATH_INCLUDE) $(DHASH_PATH_LIB) $(DHASH_SO) $(OBJS) $(DEP)

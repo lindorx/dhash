@@ -1,0 +1,4 @@
+# 安装头文件和静态库
+usr/include/*
+usr/lib/*.a
+usr/lib/pkgconfig/*.pc  # 如果有 pkg-config 文件

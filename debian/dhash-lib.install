@@ -1,0 +1,2 @@
+# 安装共享库到 /usr/lib
+usr/lib/*.so.*

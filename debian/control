@@ -1,0 +1,30 @@
+Source: dhash
+Section: utils
+Priority: optional
+Maintainer: lindorx <lindorx@163.com>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.5.1
+Homepage: <insert the upstream URL, if relevant>
+#Vcs-Browser: https://salsa.debian.org/debian/dhash
+#Vcs-Git: https://salsa.debian.org/debian/dhash.git
+Rules-Requires-Root: no
+
+Package: dhash
+Architecture: any
+Depends: ${shlibs:Depends}, dhash-lib (= ${binary:Version})
+Description: <insert up to 60 chars description>
+ <insert long description, indented with spaces>
+
+Package: dhash-lib
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: 动态库包
+ 包含 dhash 的共享库文件。
+
+Package: dhash-dev
+Section: libdevel
+Architecture: any
+Depends: dhash-lib (= ${binary:Version})
+Description: 开发文件包
+ 包含 dhash 的头文件和静态库，用于开发。
